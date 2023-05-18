@@ -76,7 +76,7 @@ nb-configuration.xml
 ##############################
 ## Visual Studio Code
 ##############################
-.vscode/
+#.vscode/
 .code-workspace
 
 ##############################
@@ -218,5 +218,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# custom 
+# custom
 *__gitignore*
