@@ -1,8 +1,13 @@
-// 提示 eslint 当前在 node 环境下，否则 eslint 会提示 'module' is not defined.
+// @ts-check
+const { defineConfig } = require('eslint-define-config');
 
-/* eslint-env node */
-module.exports = {
+module.exports = defineConfig({
   root: true,
+  env: {
+    es6: true,
+    node: true,
+    browser: true,
+  },
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
@@ -13,18 +18,23 @@ module.exports = {
   parserOptions: {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
+    ecmaVersion: 2021,
   },
-  // 插件列表，插件名称可以省略 ‘eslint-plugin-’ 前缀
-  // eslint 在加载时会自动获取 ‘eslint-plugin-${plugin-name}’
+  // 插件列表，插件名称可以省略 'eslint-plugin-' 前缀
+  // eslint 在加载时会自动获取 'eslint-plugin-${plugin-name}'
   plugins: ['vue', '@typescript-eslint', 'prettier'],
-  overrides: {
-    // 仅针对 .ts,.tsx,.vue 规则配置
-    files: ['*.ts', '*.tsx', '.vue'],
-    rules: {},
-  },
+  overrides: [
+    {
+      // 针对 js,jsx,ts,tsx,vue 规则配置
+      files: ['*.{js,jsx,ts,tsx,vue}'],
+      rules: {},
+    },
+  ],
   // 全局规则配置
   rules: {
-    'no-var': 'error', // 禁止使用 var
+    // 禁止使用 var
+    'no-var': 'error',
+    'no-undef': 'off',
     '@typescript-eslint/no-var-requires': 'off',
   },
-};
+});
