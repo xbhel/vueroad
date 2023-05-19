@@ -18,7 +18,7 @@
     }
   },
   "include": [
-    "types/**/*.d.ts",
+    "typings/**/*.d.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",

@@ -15,17 +15,17 @@ export default defineConfig({
       // 自定义的组件目录，该目录下的组件都会自动导入
       dirs: ['src/components'],
       // 生成的自动导入组件声明文件的位置
-      dts: 'types/components.d.ts',
+      dts: 'typings/components.d.ts',
       // 自动导入 ant-design-vue 组件
-      // 默认自动导入样式，可以设置 importStyle 为 false 禁止导入样式
-      resolvers: [AntDesignVueResolver({ importStyle: true })],
+      // 默认自动导入样式，设置 importStyle 为 false 表示无需导入样式
+      resolvers: [AntDesignVueResolver({ importStyle: false })],
     }),
     // 按需自动导入 API 插件
     AutoImport({
       // 自动导入 vue 的 API
       imports: ['vue'],
       // 生成的自动导入 API 声明文件的位置
-      dts: 'types/auto-import.d.ts',
+      dts: 'typings/auto-import.d.ts',
     }),
   ],
 });
