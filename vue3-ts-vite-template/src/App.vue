@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { isEmpty } from 'lodash';
+  isEmpty('')
+</script>
 
 <template>
   <div>

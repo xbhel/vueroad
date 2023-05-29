@@ -1,24 +1,21 @@
-import VirtualList from '../VirtualList.vue';
-export type VirtualListType = InstanceType<typeof VirtualList>;
-
-export type DataType<T> = {
+export type NodeType<T> = {
   symbol: string;
   data: { key: string; value: T }[];
 };
-
-export type InnerDataType<T> = {
-  symbol: string;
+export type NodeItemType<T> = {
   key: string;
-  // 将 symbol 作为一条数据填入
   value: T | string;
 };
 
 export default <T>(
-  datasource: Ref<DataType<T>[]>,
-  listRef?: Ref<VirtualListType>
+  datasource: Ref<NodeType<T>[]>,
+  listRef: Ref<{
+    scrollTo(offset?: number): void;
+    scrollToRow(rowIndex: number): void;
+  }>
 ) => {
   const _symbols = ref<string[]>([]);
-  const _datasource = ref([]) as Ref<InnerDataType<T>[]>;
+  const _datasource = ref([]) as Ref<NodeItemType<T>[]>;
   const _symbolStateMap = new Map<string, { size: number; position: number }>();
 
   updateInternalState();
@@ -34,8 +31,8 @@ export default <T>(
       _symbolStateMap.set(symbol, { size, position });
       _symbols.value.push(symbol);
       _datasource.value.push(
-        { key: symbol, symbol, value: symbol }, // 填充一条 symbol
-        ...data.map((item) => ({ ...item, symbol }))
+        { key: symbol, value: symbol }, //将 symbol 作为记录添加至数据源
+        ...data
       );
       position += size + 1;
     });
@@ -43,10 +40,14 @@ export default <T>(
 
   function scrollToSymbol(symbol: string) {
     const state = _symbolStateMap.get(symbol);
-    if (state) {
-      listRef?.value.scrollToRow(state.position);
+    if (state && listRef.value) {
+      listRef.value.scrollToRow(state.position);
     }
   }
 
-  return { _datasource, _symbols, scrollToSymbol };
+  function isSymbol(symbol: unknown) {
+    return typeof symbol === 'string' && _symbolStateMap.has(symbol);
+  }
+
+  return { _datasource, _symbols, scrollToSymbol, isSymbol };
 };

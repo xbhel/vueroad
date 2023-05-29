@@ -1,19 +1,28 @@
 <script setup lang="ts">
+  defineExpose({
+    scrollTo,
+    scrollToRow,
+  });
+
   const props = defineProps<{
     rowHeight: number; // 每行列表项的高度
-    visibleSize: number; // 可视个数
-    data: { key: string; value: string }[]; // 数据
+    visibleCount: number; // 可视个数
+    data: { key: string; value: unknown }[]; // 数据
+  }>();
+
+  const emit = defineEmits<{
+    (e: 'clickRow', record: ArrayElementType<typeof props.data>): void;
   }>();
 
   const containerRef = ref<HTMLDivElement>();
   const state = reactive({
     offset: 0,
     start: 0,
-    end: props.visibleSize,
+    end: props.visibleCount,
   });
 
   const containerHeight = computed(() => {
-    return props.rowHeight * props.visibleSize;
+    return props.rowHeight * props.visibleCount;
   });
 
   const transformStyle = computed(() => {
@@ -28,36 +37,37 @@
     return props.data.slice(state.start, state.end);
   });
 
+  const onClickRow = (record: ArrayElementType<typeof props.data>) => {
+    emit('clickRow', record);
+  };
+
   const onScroll = () => {
     if (containerRef.value) scrollTo();
   };
 
-  const scrollTo = (offset?: number) => {
+  function scrollToRow(rowIndex: number) {
+    scrollTo(rowIndex * props.rowHeight);
+  }
+
+  function scrollTo(offset?: number) {
     window.requestAnimationFrame(() => {
       if (!containerRef.value) return;
-      const { rowHeight, visibleSize } = props;
+      const { rowHeight, visibleCount } = props;
       // set
       if (offset !== undefined) {
         const maxScrollHeight = fillerHeight.value - rowHeight;
         const top = Math.min(offset, maxScrollHeight);
+        // 滚动时的动画效果
+        containerRef.value.style.scrollBehavior = 'smooth';
         containerRef.value.scrollTop = top;
       }
       // scroll
       const scrollTop = containerRef.value.scrollTop;
       state.start = Math.floor(scrollTop / rowHeight);
-      state.end = state.start + visibleSize;
+      state.end = state.start + visibleCount;
       state.offset = scrollTop - (scrollTop % rowHeight);
     });
-  };
-
-  const scrollToRow = (rowIndex: number) => {
-    scrollTo(rowIndex * props.rowHeight);
-  };
-
-  defineExpose({
-    scrollTo,
-    scrollToRow,
-  });
+  }
 </script>
 
 <template>
@@ -70,12 +80,13 @@
     <div class="scroll-list" :style="transformStyle">
       <div
         class="scroll-list-item"
-        v-for="item in buffer"
-        :key="item.key"
+        v-for="record in buffer"
+        :key="record.key"
         :style="{ height: rowHeight + 'px' }"
+        @click="onClickRow(record)"
       >
-        <slot :item="item">
-          {{ item.value }}
+        <slot :record="record">
+          {{ record.value }}
         </slot>
       </div>
     </div>
@@ -89,7 +100,7 @@
 <style scoped>
   .scroll-list-container {
     height: 100%;
-    overflow-y: auto;
+    overflow: auto;
     position: relative;
   }
   .scroll-list-fill {
@@ -105,12 +116,13 @@
     top: 0;
     position: absolute;
     text-align: center;
+    padding: 0 0.5rem;
   }
 
   .scroll-list-item {
-    padding: 10px;
     color: #555;
+    text-align: left;
     box-sizing: border-box;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #e8e8e8;
   }
 </style>
