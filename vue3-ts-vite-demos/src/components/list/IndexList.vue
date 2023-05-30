@@ -39,6 +39,7 @@
   <div class="index-list-container">
     <VirtualList
       ref="virtualListRef"
+      class="virtual-list"
       :data="_datasource"
       :row-height="rowHeight"
       :visible-count="visibleCount"
@@ -78,11 +79,10 @@
     position: relative;
     font-size: 14px;
 
-    ::v-deep {
-      .scroll-list-item {
-        border-bottom: none;
-        padding-right: 1.5em;
-      }
+    // vue3.2 之后推荐使用 :deep 代替 ::v-deep
+    .virtual-list :deep(.scroll-list-item) {
+      border-bottom: none;
+      padding-right: 1.5em;
     }
 
     .list-item-body {

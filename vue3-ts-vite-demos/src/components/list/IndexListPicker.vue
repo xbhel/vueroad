@@ -8,6 +8,7 @@
   const props = defineProps<{
     modelValue: string[]; // for v-model
     data: NodeType<unknown>[];
+    limit?: number; // 限制 checkbox 选中的数量, 负数表示不可选, 0 表示不限制
   }>();
 
   const emit = defineEmits<{
@@ -31,6 +32,11 @@
   const isChecked = (value: string) => {
     return checkedValues.value.includes(value);
   };
+
+  const disabled = computed((value: string) => {
+    const { limit } = props;
+    return limit && checkedValues.value.length >= limit;
+  });
 </script>
 
 <template>
@@ -41,6 +47,7 @@
           :value="record.key"
           @change="onChange"
           :checked="isChecked(record.key)"
+          :disabled="!isChecked(record.key) && disabled"
           >{{ record.value }}</a-checkbox
         >
         <slot name="extra" :record="record" />

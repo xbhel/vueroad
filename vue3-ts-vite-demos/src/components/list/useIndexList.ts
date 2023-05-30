@@ -21,6 +21,7 @@ export default <T>(
   updateInternalState();
 
   watch(datasource, () => {
+    clearInternalState();
     updateInternalState();
   });
 
@@ -47,6 +48,12 @@ export default <T>(
 
   function isSymbol(symbol: unknown) {
     return typeof symbol === 'string' && _symbolStateMap.has(symbol);
+  }
+
+  function clearInternalState() {
+    _symbols.value = [];
+    _datasource.value = [];
+    _symbolStateMap.clear();
   }
 
   return { _datasource, _symbols, scrollToSymbol, isSymbol };

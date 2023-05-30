@@ -41,7 +41,12 @@
       placeholder="请输入商品名称"
     />
 
-    <IndexListPicker v-model="chekedValues" :data="datasource" />
+    <IndexListPicker
+      class="index-list-picker"
+      v-model="chekedValues"
+      :data="datasource"
+      :limit="8"
+    />
   </div>
 </template>
 
@@ -58,12 +63,10 @@
     }
   }
 
-  ::v-deep {
-    .scroll-list {
-      padding: 0;
-    }
-    .list-item-body {
-      border-bottom: none !important;
-    }
+  .index-list-picker :deep(.scroll-list) {
+    padding: 0;
+  }
+  .index-list-picker :deep(.list-item-body) {
+    border-bottom: none !important;
   }
 </style>
