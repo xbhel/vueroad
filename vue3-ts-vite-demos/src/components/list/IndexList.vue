@@ -80,6 +80,7 @@
     font-size: 14px;
 
     // vue3.2 之后推荐使用 :deep 代替 ::v-deep
+    // 为了更加符合 CSS 规范，减少与伪元素的冲突（如 ::after），:: 是伪类元素保留字
     .virtual-list :deep(.scroll-list-item) {
       border-bottom: none;
       padding-right: 1.5em;
