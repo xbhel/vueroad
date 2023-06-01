@@ -12,7 +12,8 @@
   }>();
 
   const emit = defineEmits<{
-    (e: 'input', value: string[]): void;
+    // (e: 'input', value: string[]): void; // for v-model
+    (e: 'update:modelValue', value: string[]): void;
   }>();
 
   const checkedValues = ref(props.modelValue || []);
@@ -26,7 +27,8 @@
       const index = checkedValues.value.findIndex((v) => v === value);
       checkedValues.value.splice(index, 1);
     }
-    emit('input', checkedValues.value);
+    // emit('input', checkedValues.value); // for v-model
+    emit('update:modelValue', checkedValues.value);
   };
 
   const isChecked = (value: string) => {

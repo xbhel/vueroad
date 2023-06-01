@@ -31,6 +31,7 @@ cp -r "${files[@]}" "$dest"
 
 # 在 /usr/bin 路径下创建符合链接，以便可以直接执行命令
 chmod +x "$file_path"
+# -h 表示链接文件
 if ! [ -h "$link_name" ] && ! [ -f "$link_name" ]; then
   # 兼容 windows, windows 上创建链接包含路径报错
   ln -s "$file_path" "$file_name" && mv "$file_name" /usr/bin/
