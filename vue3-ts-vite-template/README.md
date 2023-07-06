@@ -9,3 +9,7 @@
 ```bash
 ./scripts/cpi.sh vue3-ts-vite-template/ vue3-ts-vite-demos node_modules
 ```
+
+## directory
+
+- .browserslistrc 配置浏览器兼容

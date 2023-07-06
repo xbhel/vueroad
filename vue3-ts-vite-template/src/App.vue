@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { isEmpty } from 'lodash';
-  isEmpty('')
+  isEmpty('');
 </script>
 
 <template>
