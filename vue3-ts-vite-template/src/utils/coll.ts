@@ -1,10 +1,10 @@
 import { chain } from 'lodash';
 import { Mapper } from 'typings';
 
-export const groupby = <T>(
+export const groupBy = <T>(
   arr: T[],
-  mapper: Mapper<T, string>
+  keyMapper: Mapper<T, string>
 ): Map<string, T[]> => {
-  const state = chain(arr).groupBy(mapper).toPairs().value();
+  const state = chain(arr).groupBy(keyMapper).toPairs().value();
   return new Map(state);
 };

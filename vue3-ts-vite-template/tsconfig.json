@@ -1,36 +1,40 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "esnext",
+    "module": "esnext",
+    "baseUrl": ".",
     "strict": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
-    "baseUrl": ".",
     "jsx": "preserve",
+    "moduleResolution": "node",
     "sourceMap": true,
     "importHelpers": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"],
-    "skipLibCheck": true,
-    "moduleResolution": "Node",
     "strictFunctionTypes": true,
+    "skipLibCheck": true,
+    "lib": ["esnext", "dom"],
+    "strictNullChecks": true,
     "useDefineForClassFields": true,
+    "strictPropertyInitialization": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": false,
     "paths": {
       "@/*": ["src/*"]
     },
     "types": ["vitest/globals"]
   },
   "include": [
-    "typings/**/*.d.ts",
+    "tests/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts"
+    "typings/**/*.d.ts",
+    "vite.config.ts",
+    "vitest.config.ts"
   ],
-  "exclude": ["node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["node_modules", "dist"]
 }

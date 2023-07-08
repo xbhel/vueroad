@@ -1,8 +1,8 @@
-import { groupby } from '@/utils';
+import { groupBy } from '@/utils';
 
-describe('groupby', () => {
+describe('groupBy', () => {
   it('should be divided into 2 groups', () => {
-    const map = groupby(
+    const map = groupBy(
       [
         { id: '1', name: 'jack' },
         { id: '2', name: 'tom' },

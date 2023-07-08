@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { isEmpty } from 'lodash';
-  isEmpty('');
+  import { groupBy } from '@/utils';
+  console.log(groupBy);
 </script>
 
 <template>
