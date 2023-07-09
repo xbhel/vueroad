@@ -220,3 +220,6 @@ dist
 
 # custom
 *__gitignore*
+
+# vue
+*.local

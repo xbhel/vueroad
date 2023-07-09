@@ -1,13 +1,16 @@
-import viteConfig from './vite.config';
-import { defineConfig } from 'vitest/config';
+import useViteConfig from './vite.config';
+import { UserConfigFn, defineConfig } from 'vitest/config';
 
-export default defineConfig({
-  ...viteConfig,
-  test: {
-    globals: true,
-    include: [
-      '**/__tests__/**/*.?(c|m)[jt]s?(x)',
-      '**/?(*.){test,spec}.?(c|m)[jt]s?(x)',
-    ],
-  },
+export default defineConfig((env) => {
+  const viteConfig = (useViteConfig as UserConfigFn)(env);
+  return {
+    ...viteConfig,
+    test: {
+      globals: true,
+      include: [
+        '**/__tests__/**/*.?(c|m)[jt]s?(x)',
+        '**/?(*.){test,spec}.?(c|m)[jt]s?(x)',
+      ],
+    },
+  };
 });

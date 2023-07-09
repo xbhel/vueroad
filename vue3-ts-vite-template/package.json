@@ -13,7 +13,7 @@
     "preview:dist": "vite preview",
     "test:unit": "vitest",
     "coverage": "vitest run --coverage",
-    "postinstall": "esno scripts/welcome.ts"
+    "postinstall": "esno build/scripts/welcome.ts"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",

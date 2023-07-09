@@ -16,4 +16,16 @@ declare global {
 
   // 要么是 T 要么是 U
   type XOR<T, U> = (Without<T, U> & U) | (Without<U, T> & T);
+
+  type Recordable<T = any> = Record<string, T>;
+
+  // vite 环境变量类型声明
+  interface ViteEnv {
+    VITE_PORT: number;
+    VITE_APP_NAME: string;
+    VITE_PUBLIC_PATH: string;
+    VITE_CLEAR_CONSOLE: boolean;
+  }
+
+  interface ImportMetaEnv extends ViteEnv {}
 }
