@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { loadEnv } from 'vite';
 import { defineConfig } from 'vite';
+import { getEnvs } from './build/utils';
 import vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite';
@@ -10,23 +11,30 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 export default defineConfig(({ mode }) => {
   const root = process.cwd();
   const viteEnv = loadEnv(mode, root);
-
-  console.log(viteEnv, root);
+  const { VITE_PORT, VITE_CLEAR_CONSOLE, VITE_PUBLIC_PATH } = getEnvs(viteEnv);
 
   return {
     root,
+    base: VITE_PUBLIC_PATH,
+    server: {
+      port: VITE_PORT,
+      // 监听所有地址，包括 LAN 和 public address.
+      host: true,
+    },
     resolve: {
       alias: [
         {
           find: '@',
-          replacement: resolve(process.cwd(), 'src'),
+          replacement: resolvePath('src'),
+        },
+        {
+          find: '#',
+          replacement: resolvePath('typings'),
         },
       ],
     },
-    server: {
-      port: 9876,
-      // 监听所有地址，包括 LAN 和 public address.
-      host: true,
+    esbuild: {
+      pure: VITE_CLEAR_CONSOLE ? ['console.log', 'debugger'] : [],
     },
     plugins: [
       vue(),
@@ -50,3 +58,7 @@ export default defineConfig(({ mode }) => {
     ],
   };
 });
+
+function resolvePath(...path: string[]) {
+  return resolve(process.cwd(), ...path);
+}

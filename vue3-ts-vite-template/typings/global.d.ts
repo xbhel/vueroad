@@ -25,7 +25,10 @@ declare global {
     VITE_APP_NAME: string;
     VITE_PUBLIC_PATH: string;
     VITE_CLEAR_CONSOLE: boolean;
+    VITE_API_BASE_URL: string;
   }
 
-  interface ImportMetaEnv extends ViteEnv {}
+  interface ImportMetaEnv extends ViteEnv {
+    __: unknown;
+  }
 }

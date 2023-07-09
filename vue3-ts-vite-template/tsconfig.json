@@ -22,7 +22,8 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": false,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "#/*": ["typings/*"]
     },
     "types": ["vitest/globals"]
   },
