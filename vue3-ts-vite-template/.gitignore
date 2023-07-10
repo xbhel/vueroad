@@ -29,7 +29,7 @@ buildNumber.properties
 ## Gradle
 ##############################
 bin/
-build/
+# build/
 .gradle
 .gradletasknamecache
 gradle-app.setting
