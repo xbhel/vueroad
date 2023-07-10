@@ -1,11 +1,13 @@
 <script setup lang="ts">
-  import { groupBy } from '@/utils';
-  console.log(groupBy);
+  import { isEmpty } from 'lodash';
+  isEmpty('');
 </script>
 
 <template>
   <div>
+    <AutoUpload />
     <a-button type="primary">ant-design-vue Button</a-button>
+
     <a href="https://vitejs.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
@@ -13,7 +15,6 @@
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>

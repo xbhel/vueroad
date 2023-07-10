@@ -33,9 +33,6 @@ export default defineConfig(({ mode }) => {
         },
       ],
     },
-    esbuild: {
-      pure: VITE_CLEAR_CONSOLE ? ['console.log', 'debugger'] : [],
-    },
     plugins: [
       vue(),
       // 按需自动导入组件插件
@@ -56,6 +53,12 @@ export default defineConfig(({ mode }) => {
         dts: 'typings/auto-import.d.ts',
       }),
     ],
+    esbuild: {
+      pure: VITE_CLEAR_CONSOLE ? ['console.log', 'debugger'] : [],
+    },
+    optimizeDeps: {
+      include: ['@vue/runtime-core'],
+    },
   };
 });
 
